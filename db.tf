@@ -5,36 +5,24 @@ variable "postgres_password" {
   type = string
 }
 
-resource "azurerm_postgresql_server" "takahe" {
-  name                = "takahe"
-  location            = azurerm_resource_group.takahe-pindropt-fail.location
-  resource_group_name = azurerm_resource_group.takahe-pindropt-fail.name
+resource "azurerm_postgresql_flexible_server" "takahe" {
+  name                   = "takahe"
+  resource_group_name    = azurerm_resource_group.takahe-pindropt-fail.name
+  location               = azurerm_resource_group.takahe-pindropt-fail.location
+  version                = "14"
+  delegated_subnet_id    = azurerm_subnet.default.id
+  administrator_login    = var.postgres_username
+  administrator_password = var.postgres_password
+  zone                   = "1"
 
-  sku_name = "B_Gen5_2"
+  storage_mb = 32768
 
-  storage_mb                   = 5120
-  backup_retention_days        = 7
-  geo_redundant_backup_enabled = false
-  auto_grow_enabled            = true
-
-  administrator_login          = var.postgres_username
-  administrator_login_password = var.postgres_password
-  version                      = "9.5"
-  ssl_enforcement_enabled      = true
+  sku_name = "GP_Standard_D4s_v3"
 }
 
-resource "azurerm_postgresql_database" "takahe" {
-  name                = "takahe"
-  resource_group_name = azurerm_resource_group.takahe-pindropt-fail.name
-  server_name         = azurerm_postgresql_server.takahe.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
-}
-
-resource "azurerm_postgresql_firewall_rule" "takahe" {
-  name                = "takahe"
-  resource_group_name = azurerm_resource_group.takahe-pindropt-fail.name
-  server_name         = azurerm_postgresql_server.takahe.name
-  start_ip_address    = azurerm_public_ip.ip.ip_address
-  end_ip_address      = azurerm_public_ip.ip.ip_address
+resource "azurerm_postgresql_flexible_server_database" "takahe" {
+  name      = "takahe"
+  server_id = azurerm_postgresql_flexible_server.takahe.id
+  collation = "en_US.utf8"
+  charset   = "utf8"
 }
