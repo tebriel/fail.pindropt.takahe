@@ -5,6 +5,11 @@ variable "postgres_password" {
   type = string
 }
 
+resource "azurerm_private_dns_zone" "takahe-db" {
+  name                = "takahe.postgres.pindropt.fail"
+  resource_group_name = azurerm_resource_group.takahe-pindropt-fail.name
+}
+
 resource "azurerm_postgresql_flexible_server" "takahe" {
   name                   = "takahe"
   resource_group_name    = azurerm_resource_group.takahe-pindropt-fail.name
@@ -13,6 +18,7 @@ resource "azurerm_postgresql_flexible_server" "takahe" {
   delegated_subnet_id    = azurerm_subnet.default.id
   administrator_login    = var.postgres_username
   administrator_password = var.postgres_password
+  private_dns_zone_id    = azurerm_private_dns_zone.takahe-db.id
   zone                   = "1"
 
   storage_mb = 32768
