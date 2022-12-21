@@ -30,3 +30,11 @@ resource "azurerm_postgresql_database" "takahe" {
   charset             = "UTF8"
   collation           = "English_United States.1252"
 }
+
+resource "azurerm_postgresql_firewall_rule" "takahe" {
+  name                = "takahe"
+  resource_group_name = azurerm_resource_group.takahe-pindropt-fail.name
+  server_name         = azurerm_postgresql_server.takahe.name
+  start_ip_address    = azurerm_network_interface.takahe.private_ip_address
+  end_ip_address      = azurerm_network_interface.takahe.private_ip_address
+}
