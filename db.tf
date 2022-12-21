@@ -6,7 +6,7 @@ variable "postgres_password" {
 }
 
 resource "azurerm_private_dns_zone" "takahe-db" {
-  name                = "takahe.postgres.pindropt.fail"
+  name                = "takahe.postgres.database.azure.com"
   resource_group_name = azurerm_resource_group.takahe-pindropt-fail.name
 }
 
