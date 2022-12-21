@@ -96,6 +96,20 @@ resource "azurerm_network_security_rule" "ssh" {
   destination_address_prefix  = "*"
 }
 
+resource "azurerm_network_security_rule" "http" {
+  name                        = "HTTP"
+  resource_group_name         = azurerm_resource_group.takahe-pindropt-fail.name
+  network_security_group_name = azurerm_network_security_group.takahe-nsg.name
+  priority                    = 330
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+}
+
 resource "azurerm_network_security_rule" "https" {
   name                        = "HTTPS"
   resource_group_name         = azurerm_resource_group.takahe-pindropt-fail.name
