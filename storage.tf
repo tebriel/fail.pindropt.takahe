@@ -9,11 +9,9 @@ resource "azurerm_storage_account" "media" {
   account_replication_type  = "LRS"
   nfsv3_enabled             = true
   is_hns_enabled            = true
-}
-
-resource "azurerm_storage_account_network_rules" "deny" {
-  storage_account_id = azurerm_storage_account.media.id
-  default_action     = "Deny"
+  network_rules {
+    default_action = "Deny"
+  }
 }
 
 resource "azurerm_storage_account_network_rules" "default" {
