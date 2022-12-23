@@ -11,13 +11,6 @@ resource "azurerm_storage_account" "media" {
   is_hns_enabled            = true
   network_rules {
     default_action = "Deny"
+    virtual_network_subnet_ids = [azurerm_subnet.default.id]
   }
-}
-
-resource "azurerm_storage_account_network_rules" "default" {
-  storage_account_id = azurerm_storage_account.media.id
-
-  default_action             = "Allow"
-  ip_rules                   = [azurerm_public_ip.ip.ip_address]
-  virtual_network_subnet_ids = [azurerm_subnet.default.id]
 }
