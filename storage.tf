@@ -5,6 +5,7 @@ resource "azurerm_storage_account" "media" {
 
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  nfsv3_enabled            = true
 }
 resource "azurerm_storage_account_network_rules" "default" {
   storage_account_id = azurerm_storage_account.media.id
