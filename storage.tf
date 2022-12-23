@@ -5,9 +5,11 @@ resource "azurerm_storage_account" "media" {
 
   account_tier             = "Standard"
   account_replication_type = "LRS"
+}
+resource "azurerm_storage_account_network_rules" "default" {
+  storage_account_id = azurerm_storage_account.example.id
 
-#   network_rules {
-#     default_action             = "Allow"
-#     virtual_network_subnet_ids = [azurerm_subnet.default.id]
-#   }
+  default_action             = "Allow"
+  ip_rules                   = [azurerm_public_ip.ip.ip_address]
+  virtual_network_subnet_ids = [azurerm_subnet.default.id]
 }
