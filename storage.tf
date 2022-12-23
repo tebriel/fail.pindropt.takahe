@@ -10,7 +10,13 @@ resource "azurerm_storage_account" "media" {
   nfsv3_enabled             = true
   is_hns_enabled            = true
   network_rules {
-    default_action = "Deny"
+    default_action             = "Deny"
     virtual_network_subnet_ids = [azurerm_subnet.default.id]
   }
+}
+
+resource "azurerm_storage_container" "media" {
+  name                  = "media"
+  storage_account_name  = azurerm_storage_account.media.name
+  container_access_type = "private"
 }
