@@ -10,6 +10,12 @@ resource "azurerm_storage_account" "media" {
   nfsv3_enabled             = true
   is_hns_enabled            = true
 }
+
+resource "azurerm_storage_account_network_rules" "deny" {
+  storage_account_id = azurerm_storage_account.media.id
+  default_action     = "Deny"
+}
+
 resource "azurerm_storage_account_network_rules" "default" {
   storage_account_id = azurerm_storage_account.media.id
 
