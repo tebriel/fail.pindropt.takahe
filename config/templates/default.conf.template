@@ -5,6 +5,7 @@ server {
 }
 
 server {
+<<<<<<< Updated upstream
   listen              ${NGINX_PORT} ssl;
   listen              [::]:${NGINX_PORT} ssl;
   server_name         ${NGINX_HOST};
@@ -12,6 +13,21 @@ server {
   ssl_certificate_key /etc/letsencrypt/live/takahe.pindropt.fail/privkey.pem;
   ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
   ssl_ciphers         HIGH:!aNULL:!MD5;
+=======
+  listen               ${NGINX_PORT} ssl;
+  listen               [::]:${NGINX_PORT} ssl;
+  server_name          ${NGINX_HOST};
+  ssl_certificate      /etc/letsencrypt/live/takahe.pindropt.fail/fullchain.pem;
+  ssl_certificate_key  /etc/letsencrypt/live/takahe.pindropt.fail/privkey.pem;
+  ssl_protocols        TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers          HIGH:!aNULL:!MD5;
+  client_max_body_size 15M;
+
+  location /_media/ {
+    autoindex on;
+    root  /usr/share/nginx/data;
+  } 
+>>>>>>> Stashed changes
   
   location / {
     proxy_set_header Host $host;
