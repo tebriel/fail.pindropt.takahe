@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "media" {
-  name                = "takahepindroptfail"
+  name                = "takahepindropt"
   resource_group_name = azurerm_resource_group.takahe-pindropt-fail.name
   location            = azurerm_resource_group.takahe-pindropt-fail.location
 
