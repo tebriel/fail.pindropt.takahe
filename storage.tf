@@ -15,8 +15,8 @@ resource "azurerm_storage_account" "media" {
   }
 }
 
-resource "azurerm_storage_container" "media" {
-  name                  = "media"
-  storage_account_name  = azurerm_storage_account.media.name
-  container_access_type = "private"
-}
+# resource "azurerm_storage_container" "media" {
+#   name                  = "media"
+#   storage_account_name  = azurerm_storage_account.media.name
+#   container_access_type = "private"
+# }
